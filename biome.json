@@ -1,0 +1,107 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
+  "files": { "ignore": [".next/*"], "include": ["app/*"] },
+  "formatter": {
+    "enabled": true,
+    "formatWithErrors": false,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineEnding": "lf",
+    "lineWidth": 120,
+    "attributePosition": "auto",
+    "ignore": [
+      "**/build",
+      "**/out",
+      "**/dist",
+      "**/lib",
+      "**/isolate",
+      "**/node_modules",
+      "**/next-env.d.ts",
+      "functions/lib",
+      "**/coverage",
+      "**/.next",
+      "**/.github",
+      "**/.idea",
+      "**/.swc",
+      "**/.vscode",
+      "**/next.config.js",
+      "**/vitest.*"
+    ]
+  },
+  "organizeImports": { "enabled": true },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "complexity": {
+        "noBannedTypes": "error",
+        "noUselessConstructor": "off",
+        "noUselessLoneBlockStatements": "warn",
+        "noUselessRename": "warn",
+        "noUselessTernary": "warn",
+        "noVoid": "warn",
+        "useLiteralKeys": "warn"
+      },
+      "correctness": {
+        "noInvalidNewBuiltin": "warn",
+        "noUnusedImports": "error",
+        "noUnusedVariables": "warn",
+        "useExhaustiveDependencies": "warn",
+        "useHookAtTopLevel": "error"
+      },
+      "style": {
+        "noArguments": "warn",
+        "noNegationElse": "warn",
+        "noVar": "warn",
+        "useBlockStatements": "warn",
+        "useConst": "warn",
+        "useDefaultParameterLast": "warn",
+        "useExponentiationOperator": "warn",
+        "useSingleVarDeclarator": "warn",
+        "useTemplate": "warn"
+      },
+      "suspicious": {
+        "noDoubleEquals": "error",
+        "noEmptyBlockStatements": "warn",
+        "noExplicitAny": "off",
+        "noPrototypeBuiltins": "warn",
+        "noSelfCompare": "warn",
+        "useAwait": "warn",
+        "useDefaultSwitchClauseLast": "warn",
+        "noSuspiciousSemicolonInJsx": "warn"
+      }
+    },
+    "ignore": [
+      "**/dist",
+      "**/node_modules",
+      "**/.next",
+      "**/coverage",
+      "**/.vscode",
+      "**/.idea",
+      "**/build",
+      "**/out",
+      "**/lib",
+      "**/isolate",
+      "**/next-env.d.ts",
+      "functions/lib",
+      "**/.github",
+      "**/.swc",
+      "**/next.config.js",
+      "**/vitest.*",
+      "**/__diff_output__"
+    ]
+  },
+  "javascript": {
+    "formatter": {
+      "jsxQuoteStyle": "single",
+      "quoteProperties": "asNeeded",
+      "trailingCommas": "none",
+      "semicolons": "asNeeded",
+      "arrowParentheses": "always",
+      "bracketSpacing": true,
+      "bracketSameLine": false,
+      "quoteStyle": "double",
+      "attributePosition": "auto"
+    }
+  }
+}
