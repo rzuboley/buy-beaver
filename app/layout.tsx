@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
-import { Header } from "@/_components/header"
 import { Roboto } from "next/font/google"
+import { NextUIProvider } from "@nextui-org/react"
+import cn from "classnames"
 import "./globals.css"
 
 const roboto = Roboto({
@@ -24,9 +25,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={roboto.className}>
-        <Header />
-        {children}
+      <body className={cn([roboto.className, "bg-stone-700"])}>
+        <NextUIProvider>{children}</NextUIProvider>
       </body>
     </html>
   )

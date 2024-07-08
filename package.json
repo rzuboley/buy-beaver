@@ -9,9 +9,13 @@
     "lint": "bunx @biomejs/biome format --fix"
   },
   "dependencies": {
+    "@nextui-org/react": "^2.4.2",
+    "@nivo/pie": "^0.87.0",
+    "classnames": "^2.5.1",
+    "framer-motion": "^11.2.13",
+    "next": "14.2.4",
     "react": "^18",
-    "react-dom": "^18",
-    "next": "14.2.4"
+    "react-dom": "^18"
   },
   "devDependencies": {
     "@biomejs/biome": "1.8.3",
