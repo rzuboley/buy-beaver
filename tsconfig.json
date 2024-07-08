@@ -22,6 +22,8 @@
       "@icons/*": ["./app/_icons/*"],
       "@helpers/*": ["./app/_helpers/*"],
       "@constant": ["./app/_helpers/constant.ts"],
+      "@utils/*": ["./app/_utils/*"],
+      "@services/*": ["./app/_services/*"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

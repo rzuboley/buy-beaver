@@ -7,6 +7,7 @@ import { Plus } from "@icons/plus"
 import { useForm, type SubmitHandler } from "react-hook-form"
 import { ItemType } from "@constant"
 import { DropdownTypes } from "@/_components/main-content/card/footer/dropdown-types"
+import { createItem } from "@services/createItem"
 
 type Inputs = {
   title: string
@@ -24,7 +25,7 @@ export const Footer: FC = () => {
     formState: { isValid, errors }
   } = useForm<Inputs>({ mode: "onChange", defaultValues: { title: "", price: undefined, type: ItemType.Pending } })
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log("=====", data)
+  const onSubmit: SubmitHandler<Inputs> = (data) => createItem(data)
 
   const onSelect: MenuProps["onAction"] = (value) => setValue("type", value as ItemType)
 
