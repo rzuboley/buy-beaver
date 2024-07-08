@@ -4,11 +4,7 @@ import { type DatumId, ResponsivePie } from "@nivo/pie"
 import { colors } from "@helpers/colors"
 import type { FC } from "react"
 
-interface Pie {
-  data: any
-}
-
-export const PieChart: FC<Pie> = ({ data }) => (
+export const PieChart: FC<any> = ({ data }) => (
   <ResponsivePie
     activeOuterRadiusOffset={3}
     cornerRadius={7}

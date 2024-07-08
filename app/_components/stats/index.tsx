@@ -1,19 +1,14 @@
 import { PieChart } from "@/_components/stats/pie-chart"
+import { AmountType, PIE_DATA } from "@constant"
 import { Card, CardBody } from "@nextui-org/react"
 import cn from "classnames"
-
-enum AmountType {
-  Income = "income",
-  Reserved = "reserved",
-  Spent = "spent"
-}
 
 export const Stats = () => {
   return (
     <Card shadow='sm' radius='sm' fullWidth className='bg-stone-100'>
       <CardBody>
         <div className='h-36 w-36 m-auto mb-3'>
-          <PieChart data={DATA} />
+          <PieChart data={PIE_DATA} />
         </div>
 
         <div className='gap-5'>
@@ -39,21 +34,3 @@ const Row = ({ type }: { type: AmountType }) => (
     <span className='text-stone-700'>{400}</span>
   </div>
 )
-
-export const DATA = [
-  {
-    id: AmountType.Income,
-    label: AmountType.Income.toUpperCase(),
-    value: 40
-  },
-  {
-    id: AmountType.Spent,
-    label: AmountType.Spent.toUpperCase(),
-    value: 40
-  },
-  {
-    id: AmountType.Reserved,
-    label: AmountType.Reserved.toUpperCase(),
-    value: 20
-  }
-]

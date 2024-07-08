@@ -1,6 +1,6 @@
-import { Costs } from "@/_components/main-content/costs"
-import { Pending } from "@/_components/main-content/pending"
-import { Done } from "@/_components/main-content/done"
+import { Costs } from "@/_components/main-content/card/costs"
+import { Pending } from "@/_components/main-content/card/pending"
+import { Done } from "@/_components/main-content/card/done"
 
 export const MainContent = () => {
   return (
