@@ -1,9 +1,19 @@
-import { NextResponse } from "next/server"
+"use server"
 
-export function GET() {
-  return NextResponse.json({ status: 200 })
+import { NextResponse } from "next/server"
+import ItemModel from "@models/ItemModel"
+import { connectDB } from "@utils/connectDB"
+import pick from "lodash/pick"
+
+export async function GET() {
+  await connectDB()
+  const data = await ItemModel.find()
+  return NextResponse.json({ status: 200, data })
 }
 
-export function POST() {
-  return NextResponse.json({ status: 200 })
+export async function POST(request: Request) {
+  await connectDB()
+  const data = await request.json()
+  const item = await ItemModel.create(data)
+  return NextResponse.json({ status: 200, item: pick(item, ["_id", "title", "price", "type"]) })
 }
