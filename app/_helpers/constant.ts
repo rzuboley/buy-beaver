@@ -1,11 +1,4 @@
-// AmountType
-export const AmountType = {
-  Income: "income",
-  Reserved: "reserved",
-  Spent: "spent"
-} as const
-
-export type AmountType = (typeof AmountType)[keyof typeof AmountType]
+import { colors } from "./colors"
 
 // ItemType
 export const ItemType = {
@@ -34,23 +27,29 @@ export const ItemStatus = {
   Costs: "costs"
 } as const
 
+export const ItemColorByStatus: Record<ItemStatusType, { bg: string; text: string; color: string }> = {
+  [ItemStatus.Done]: { bg: "bg-red-300", text: "text-red-300", color: colors.red[300] },
+  [ItemStatus.Pending]: { bg: "bg-yellow-400", text: "text-yellow-400", color: colors.yellow[400] },
+  [ItemStatus.Costs]: { bg: "bg-sky-400", text: "text-sky-400", color: colors.sky[400] }
+} as const
+
 export type ItemStatusType = (typeof ItemStatus)[keyof typeof ItemStatus]
 
 // Other
 export const PIE_DATA = [
   {
-    id: AmountType.Income,
-    label: AmountType.Income.toUpperCase(),
+    id: ItemStatus.Done,
+    label: ItemStatus.Done.toUpperCase(),
     value: 40
   },
   {
-    id: AmountType.Spent,
-    label: AmountType.Spent.toUpperCase(),
+    id: ItemStatus.Pending,
+    label: ItemStatus.Pending.toUpperCase(),
     value: 40
   },
   {
-    id: AmountType.Reserved,
-    label: AmountType.Reserved.toUpperCase(),
+    id: ItemStatus.Costs,
+    label: ItemStatus.Costs.toUpperCase(),
     value: 20
   }
 ]

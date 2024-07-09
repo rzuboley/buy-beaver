@@ -3,6 +3,7 @@
 import { type DatumId, ResponsivePie } from "@nivo/pie"
 import { colors } from "@helpers/colors"
 import type { FC } from "react"
+import { ItemColorByStatus, ItemStatus } from "@helpers/constant"
 
 export const PieChart: FC<any> = ({ data }) => (
   <ResponsivePie
@@ -22,12 +23,12 @@ export const PieChart: FC<any> = ({ data }) => (
 
 const getColor = ({ id }: { id: DatumId }) => {
   switch (true) {
-    case id === "income":
-      return colors.sky[400]
-    case id === "spent":
-      return colors.red[300]
-    case id === "reserved":
-      return colors.yellow[400]
+    case id === ItemStatus.Costs:
+      return ItemColorByStatus.costs.color
+    case id === ItemStatus.Done:
+      return ItemColorByStatus.done.color
+    case id === ItemStatus.Pending:
+      return ItemColorByStatus.pending.color
     default:
       return colors.gray[200]
   }

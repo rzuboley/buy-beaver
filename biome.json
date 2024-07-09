@@ -1,6 +1,6 @@
 {
   "$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
-  "files": { "ignore": [".next/*"], "include": ["app/*", "tailwind.config.ts", "public/icons/*", "model/*"] },
+  "files": { "ignore": [".next/*"], "include": ["app/*", "tailwind.config.ts", "public/icons/*"] },
   "formatter": {
     "enabled": true,
     "formatWithErrors": false,

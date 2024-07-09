@@ -24,7 +24,8 @@
       "@constant": ["./app/_helpers/constant.ts"],
       "@utils/*": ["./app/_utils/*"],
       "@services/*": ["./app/_services/*"],
-      "@models/*": ["./models/*"],
+      "@models/*": ["./app/server/_models/*"],
+      "@interface": ["./app/_helpers/interface.ts"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

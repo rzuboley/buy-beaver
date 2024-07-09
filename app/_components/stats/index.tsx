@@ -1,7 +1,6 @@
 import { PieChart } from "@/_components/stats/pie-chart"
-import { AmountType, PIE_DATA } from "@constant"
-import { Card, CardBody } from "@nextui-org/react"
-import cn from "classnames"
+import { ItemColorByStatus, ItemStatus, type ItemStatusType, PIE_DATA } from "@constant"
+import { Card, CardBody, cn } from "@nextui-org/react"
 
 export const Stats = () => {
   return (
@@ -12,24 +11,18 @@ export const Stats = () => {
         </div>
 
         <div className='gap-5'>
-          <Row type={AmountType.Income} />
-          <Row type={AmountType.Reserved} />
-          <Row type={AmountType.Spent} />
+          <Row type={ItemStatus.Costs} />
+          <Row type={ItemStatus.Pending} />
+          <Row type={ItemStatus.Done} />
         </div>
       </CardBody>
     </Card>
   )
 }
 
-const Row = ({ type }: { type: AmountType }) => (
+const Row = ({ type }: { type: ItemStatusType }) => (
   <div className='flex items-center p-1 gap-2 text-xs uppercase'>
-    <span
-      className={cn("p-1.5 rounded-sm", {
-        "bg-sky-400": type === AmountType.Income,
-        "bg-yellow-400": type === AmountType.Reserved,
-        "bg-red-300": type === AmountType.Spent
-      })}
-    />
+    <span className={cn("p-1.5 rounded-sm", ItemColorByStatus[type].bg)} />
     <span className='text-stone-500'>{type}:</span>
     <span className='text-stone-700'>{400}</span>
   </div>

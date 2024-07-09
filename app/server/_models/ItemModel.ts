@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose"
+import { Schema, model, models } from "mongoose"
 import { formatCurrency } from "@helpers/formatting"
 import { ItemType } from "@helpers/constant"
 
@@ -26,4 +26,4 @@ const Item = new Schema(
   }
 )
 
-export default model("Item", Item)
+export default models.Item || model("Item", Item)

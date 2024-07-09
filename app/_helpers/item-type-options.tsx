@@ -1,5 +1,5 @@
 import { ItemColorByType, ItemType } from "@constant"
-import cn from "classnames"
+import { cn } from "@nextui-org/react"
 
 const classes = "p-1 rounded-full"
 
