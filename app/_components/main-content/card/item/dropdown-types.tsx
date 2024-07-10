@@ -8,11 +8,12 @@ import { ITEM_TYPE_OPTIONS } from "@/_helpers/item-type-options"
 interface DropdownTypes {
   onSelect: MenuProps["onAction"]
   value: ItemType
+  isDisabled?: boolean
 }
 
-export const DropdownTypes: FC<DropdownTypes> = ({ onSelect, value }) => {
+export const DropdownTypes: FC<DropdownTypes> = ({ onSelect, value, isDisabled = false }) => {
   return (
-    <Dropdown>
+    <Dropdown isDisabled={isDisabled}>
       <DropdownTrigger>
         <Button isIconOnly size='sm' radius='sm' variant='flat' className={ItemColorByType[value].text}>
           <Flag />

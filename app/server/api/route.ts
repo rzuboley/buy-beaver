@@ -17,3 +17,10 @@ export async function POST(request: Request) {
   const item = await ItemModel.create(data)
   return NextResponse.json({ status: 200, item: pick(item, ["_id", "title", "price", "type"]) })
 }
+
+export async function DELETE(request: Request) {
+  await connectDB()
+  const data = await request.json()
+  const item = await ItemModel.deleteOne({ _id: data.id })
+  return NextResponse.json({ status: 200, data: pick(item, ["deletedCount"]) })
+}

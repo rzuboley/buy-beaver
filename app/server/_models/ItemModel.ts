@@ -22,7 +22,15 @@ const Item = new Schema(
   {
     minimize: true,
     timestamps: false,
-    versionKey: false
+    versionKey: false,
+    virtuals: {
+      id: {
+        get() {
+          return this._id.toString()
+        }
+      }
+    },
+    toJSON: { virtuals: true } // return virtuals in response
   }
 )
 

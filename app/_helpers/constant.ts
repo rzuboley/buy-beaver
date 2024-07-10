@@ -53,3 +53,11 @@ export const PIE_DATA = [
     value: 20
   }
 ]
+
+// Model
+export interface ItemData {
+  id: string
+  title: string
+  price: number
+  type: ItemType
+}
