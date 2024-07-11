@@ -5,7 +5,7 @@ import { Input } from "@nextui-org/input"
 import { Button, CardFooter, type MenuProps } from "@nextui-org/react"
 import { Plus } from "@icons/plus"
 import { useForm, type SubmitHandler } from "react-hook-form"
-import { type ItemData, ItemType } from "@constant"
+import { type ItemData, ItemStatus, ItemType } from "@constant"
 import { DropdownTypes } from "@/_components/main-content/card/item/dropdown-types"
 import { useCreateItem } from "@services/createItem"
 
@@ -20,14 +20,14 @@ export const Footer: FC = () => {
     watch,
     reset,
     formState: { isValid, errors }
-  } = useForm<Inputs>({ mode: "onChange", defaultValues: { title: "", price: undefined, type: ItemType.HomeOther } })
+  } = useForm<Inputs>({
+    mode: "onChange",
+    defaultValues: { title: "", price: undefined, type: ItemType.HomeOther, status: ItemStatus.Costs }
+  })
 
   const { mutate, isPending } = useCreateItem()
 
-  const onSubmit: SubmitHandler<Inputs> = (data) =>
-    mutate(data, {
-      onSuccess: () => reset()
-    })
+  const onSubmit: SubmitHandler<Inputs> = (data) => mutate(data, { onSuccess: () => reset() })
 
   const onSelect: MenuProps["onAction"] = (value) => setValue("type", value as ItemType)
 
@@ -60,7 +60,11 @@ export const Footer: FC = () => {
           type='number'
           variant='faded'
           {...(errors.price && { color: "danger" })}
-          {...register("price", { required: true })}
+          {...register("price", {
+            required: true,
+            valueAsNumber: true,
+            setValueAs: (v) => Number(v || 0).toFixed(2)
+          })}
         />
 
         <Button

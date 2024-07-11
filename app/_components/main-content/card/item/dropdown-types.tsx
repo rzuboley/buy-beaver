@@ -1,12 +1,12 @@
 import type { FC } from "react"
-import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button, type MenuProps } from "@nextui-org/react"
+import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@nextui-org/react"
 import { ItemColorByType, ItemType } from "@constant"
 
 import { Flag } from "@icons/flag"
 import { ITEM_TYPE_OPTIONS } from "@/_helpers/item-type-options"
 
 interface DropdownTypes {
-  onSelect: MenuProps["onAction"]
+  onSelect: (v: any) => void
   value: ItemType
   isDisabled?: boolean
 }

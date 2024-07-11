@@ -1,6 +1,6 @@
 import { Schema, model, models } from "mongoose"
 import { formatCurrency } from "@helpers/formatting"
-import { ItemType } from "@helpers/constant"
+import { ItemStatus, ItemType } from "@constant"
 
 const Item = new Schema(
   {
@@ -17,6 +17,10 @@ const Item = new Schema(
     type: {
       type: String,
       default: ItemType.Pending
+    },
+    status: {
+      type: String,
+      default: ItemStatus.Costs
     }
   },
   {

@@ -1,20 +1,21 @@
 import type { FC } from "react"
-import { Button } from "@nextui-org/react"
-
+import { ActionButton } from "@/_components/main-content/card/item/action-button"
 import { Trash } from "@icons/trash"
+import { ItemColorByStatus } from "@/_helpers/constant"
+import { CirclePause } from "@icons/circle-pause"
 
 interface ActionSection {
   onDelete: () => void
+  onChangeStatus: () => void
 }
 
-export const ActionSection: FC<ActionSection> = ({ onDelete }) => {
+export const ActionSection: FC<ActionSection> = ({ onDelete, onChangeStatus }) => {
   return (
-    <div className='flex group-hover/item:w-8 gap-1 w-0 overflow-hidden transition-all'>
-      {onDelete && (
-        <Button isIconOnly size='sm' radius='sm' variant='flat' className='text-red-400' onClick={onDelete}>
-          <Trash />
-        </Button>
+    <div className='flex gap-1'>
+      {onChangeStatus && (
+        <ActionButton className={ItemColorByStatus.pending.text} onClick={onChangeStatus} icon={CirclePause} />
       )}
+      {onDelete && <ActionButton className='text-red-400' onClick={onDelete} icon={Trash} />}
     </div>
   )
 }

@@ -60,4 +60,8 @@ export interface ItemData {
   title: string
   price: number
   type: ItemType
+  status: ItemStatusType
 }
+
+export type UpdateItemData = Required<Pick<ItemData, "id">> &
+  Partial<Omit<ItemData & { oldStatus: ItemStatusType }, "id">>

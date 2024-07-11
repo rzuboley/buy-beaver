@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { cloudRequest } from "@utils/axios"
 import type { AxiosRequestConfig } from "axios"
-import type { ItemData } from "@constant"
+import { ItemStatus, type ItemData } from "@constant"
 
 const createItem = async (data: AxiosRequestConfig["data"]) => {
   try {
@@ -17,6 +17,6 @@ export const useCreateItem = () => {
 
   return useMutation({
     mutationFn: (data: Omit<ItemData, "id">) => createItem(data),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["getItems"], exact: true })
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["getItems", ItemStatus.Costs], exact: true })
   })
 }
