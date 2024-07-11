@@ -54,6 +54,7 @@ export const Body: FC<Body> = ({ statusType }) => {
             startContent={<DropdownTypes onSelect={onSelectType} item={item} />}
             endContent={
               <ActionSection
+                status={item.status}
                 onDelete={() => onDelete(item)}
                 onChangeStatus={() =>
                   onChangeStatus({ id: item.id, status: newStatus(item.status), oldStatus: item.status })
