@@ -2,7 +2,7 @@
 
 import type { FC } from "react"
 import { Input } from "@nextui-org/input"
-import { Button, CardFooter, type MenuProps } from "@nextui-org/react"
+import { Button, CardFooter } from "@nextui-org/react"
 import { Plus } from "@icons/plus"
 import { useForm, type SubmitHandler } from "react-hook-form"
 import { type ItemData, ItemStatus, ItemType } from "@constant"
@@ -22,19 +22,19 @@ export const Footer: FC = () => {
     formState: { isValid, errors }
   } = useForm<Inputs>({
     mode: "onChange",
-    defaultValues: { title: "", price: undefined, type: ItemType.HomeOther, status: ItemStatus.Costs }
+    defaultValues: { title: "", price: undefined, type: ItemType.Pending, status: ItemStatus.Costs }
   })
 
   const { mutate, isPending } = useCreateItem()
 
   const onSubmit: SubmitHandler<Inputs> = (data) => mutate(data, { onSuccess: () => reset() })
 
-  const onSelect: MenuProps["onAction"] = (value) => setValue("type", value as ItemType)
+  const onSelect = ({ type }: ItemData) => setValue("type", type)
 
   return (
     <CardFooter className='border-t'>
       <form onSubmit={handleSubmit(onSubmit)} className='flex gap-2 items-center'>
-        <DropdownTypes isDisabled={isPending} onSelect={onSelect} value={watch("type")} />
+        <DropdownTypes isDisabled={isPending} onSelect={onSelect} item={{ type: watch("type") }} />
 
         <Input
           className='3/5'

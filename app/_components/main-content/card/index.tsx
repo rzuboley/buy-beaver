@@ -1,29 +1,22 @@
-import { Card as CardWrapper, CardBody, CardHeader, Divider, cn, Skeleton } from "@nextui-org/react"
-import type { FC, PropsWithChildren } from "react"
+import { Card as CardWrapper } from "@nextui-org/react"
+import type { FC } from "react"
+import { Header } from "@/_components/main-content/card/header"
+import { Body } from "@/_components/main-content/card/body"
 import { Footer } from "@/_components/main-content/card/footer"
-import { SelectFilter } from "@/_components/main-content/select-filter"
-import { type ItemStatusType, ItemColorByStatus } from "@constant"
+import type { ItemStatusType } from "@constant"
 
-interface Wrapper extends PropsWithChildren {
+interface Card {
   title: string
-  type: ItemStatusType
+  statusType: ItemStatusType
   withFooter?: boolean
-  isLoading?: boolean
 }
 
-export const Card: FC<Wrapper> = ({ title, type, children, isLoading = false, withFooter = false }) => {
+export const Card: FC<Card> = ({ title, statusType, withFooter = false }) => {
   return (
     <div className='p-2 w-1/3'>
       <CardWrapper shadow='sm' radius='sm' fullWidth className='bg-stone-100 min-h-full'>
-        <CardHeader className='gap-2 border-b'>
-          <Divider orientation='vertical' className={cn("w-1.5 h-6 rounded-md", ItemColorByStatus[type].bg)} />
-          {title}
-          <span className='grow' />
-          <SelectFilter />
-        </CardHeader>
-
-        <CardBody>{isLoading ? <Skeleton className='grow rounded-md' /> : children}</CardBody>
-
+        <Header statusType={statusType}>{title}</Header>
+        <Body statusType={statusType} />
         {withFooter && <Footer />}
       </CardWrapper>
     </div>

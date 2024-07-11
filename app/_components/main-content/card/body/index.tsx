@@ -1,9 +1,8 @@
 "use client"
 
-import { Card } from "@/_components/main-content/card"
 import { useGetItems } from "@services/getItems"
 import { type ItemData, ItemStatus, type ItemStatusType } from "@constant"
-import { Listbox, ListboxItem } from "@nextui-org/react"
+import { CardBody, Listbox, ListboxItem, Skeleton } from "@nextui-org/react"
 import { useCallback, useState, type FC } from "react"
 import { DropdownTypes } from "@/_components/main-content/card/item/dropdown-types"
 import { ActionSection } from "@/_components/main-content/card/item/action-section"
@@ -14,13 +13,17 @@ type DeleteData = Pick<ItemData, "id" | "status">
 type ChangeStatusData = DeleteData & { oldStatus: ItemStatusType }
 type ChangeTypeData = DeleteData & Pick<ItemData, "type">
 
-export const Costs: FC = () => {
+interface Body {
+  statusType: ItemStatusType
+}
+
+export const Body: FC<Body> = ({ statusType }) => {
   const [disabledKeys, setDisabledKeys] = useState<string[]>([])
-  const { data, isPending } = useGetItems(ItemStatus.Costs)
+  const { data, isPending } = useGetItems(statusType)
   const { mutate: deleteItem } = useDeleteItem()
   const { mutate: updateItem } = useUpdateItem()
 
-  const onChangeType = useCallback((data: ChangeTypeData) => updateItem(data), [updateItem])
+  const onSelectType = useCallback((data: ChangeTypeData) => updateItem(data), [updateItem])
 
   const onChangeStatus = useCallback((data: ChangeStatusData) => updateItem(data), [updateItem])
 
@@ -32,28 +35,47 @@ export const Costs: FC = () => {
     [deleteItem]
   )
 
+  if (isPending) {
+    return <Skeleton className='grow rounded-md' />
+  }
+
   return (
-    <Card title='Costs' type={ItemStatus.Costs} withFooter isLoading={isPending}>
-      <Listbox variant='faded' aria-label='Costs items list' items={data} disabledKeys={disabledKeys}>
-        {({ title, type, price, id, status }) => (
+    <CardBody>
+      <Listbox variant='faded' aria-label={`${statusType} items list`} items={data} disabledKeys={disabledKeys}>
+        {(item) => (
           <ListboxItem
             className='group/item'
-            key={id}
-            startContent={<DropdownTypes onSelect={(type) => onChangeType({ id, type, status })} value={type} />}
+            key={item.id}
+            startContent={<DropdownTypes onSelect={onSelectType} item={item} />}
             endContent={
               <ActionSection
-                onDelete={() => onDelete({ id, status })}
-                onChangeStatus={() => onChangeStatus({ id, status: ItemStatus.Pending, oldStatus: status })}
+                onDelete={() => onDelete(item)}
+                onChangeStatus={() =>
+                  onChangeStatus({ id: item.id, status: newStatus(item.status), oldStatus: item.status })
+                }
               />
             }
           >
             <span className='flex items-center gap-2 justify-between'>
-              <span className='truncate'>{title}</span>
-              <span className='text-base text-stone-500'>{price}</span>
+              <span className='truncate'>{item.title}</span>
+              <span className='text-base text-stone-500'>{item.price}</span>
             </span>
           </ListboxItem>
         )}
       </Listbox>
-    </Card>
+    </CardBody>
   )
+}
+
+const newStatus = (statusType: ItemStatusType) => {
+  switch (true) {
+    case statusType === ItemStatus.Costs:
+      return ItemStatus.Pending
+    case statusType === ItemStatus.Pending:
+      return ItemStatus.Done
+    case statusType === ItemStatus.Done:
+      return ItemStatus.Costs
+    default:
+      return ItemStatus.Costs
+  }
 }

@@ -1,21 +1,27 @@
 import type { FC } from "react"
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@nextui-org/react"
-import { ItemColorByType, ItemType } from "@constant"
+import { ItemColorByType, type ItemData, ItemType } from "@constant"
 
 import { Flag } from "@icons/flag"
 import { ITEM_TYPE_OPTIONS } from "@/_helpers/item-type-options"
 
 interface DropdownTypes {
   onSelect: (v: any) => void
-  value: ItemType
+  item: Partial<ItemData>
   isDisabled?: boolean
 }
 
-export const DropdownTypes: FC<DropdownTypes> = ({ onSelect, value, isDisabled = false }) => {
+export const DropdownTypes: FC<DropdownTypes> = ({ onSelect, item = {}, isDisabled = false }) => {
+  if (!item.type) {
+    return null
+  }
+
+  const onAction = (type: any) => onSelect({ id: item.id, status: item.status, type })
+
   return (
     <Dropdown isDisabled={isDisabled}>
       <DropdownTrigger>
-        <Button isIconOnly size='sm' radius='sm' variant='flat' className={ItemColorByType[value].text}>
+        <Button isIconOnly size='sm' radius='sm' variant='flat' className={ItemColorByType[item.type].text}>
           <Flag />
         </Button>
       </DropdownTrigger>
@@ -23,11 +29,11 @@ export const DropdownTypes: FC<DropdownTypes> = ({ onSelect, value, isDisabled =
       <DropdownMenu
         aria-label='Types'
         items={ITEM_TYPE_OPTIONS}
-        onAction={onSelect}
+        onAction={onAction}
         disallowEmptySelection
         selectionMode='single'
         defaultSelectedKeys={[ItemType.Pending]}
-        selectedKeys={[value]}
+        selectedKeys={[item.type]}
       >
         {({ key, label, ...props }) => (
           <DropdownItem key={key} {...props}>

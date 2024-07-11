@@ -16,7 +16,9 @@ export const useUpdateItem = () => {
 
   return useMutation({
     mutationFn: ({ id, ...data }: UpdateItemData) => updateItem(id, data),
-    onSuccess: (__, variables) =>
-      queryClient.invalidateQueries({ queryKey: ["getItems", variables.oldStatus || variables.status], exact: true })
+    onSuccess: (__, variables) => {
+      queryClient.invalidateQueries({ queryKey: ["getItems", variables.oldStatus], exact: true })
+      queryClient.invalidateQueries({ queryKey: ["getItems", variables.status], exact: true })
+    }
   })
 }
