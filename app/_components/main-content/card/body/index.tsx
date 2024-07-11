@@ -36,7 +36,11 @@ export const Body: FC<Body> = ({ statusType }) => {
   )
 
   if (isPending) {
-    return <Skeleton className='grow rounded-md' />
+    return (
+      <CardBody>
+        <Skeleton className='grow rounded-md' />
+      </CardBody>
+    )
   }
 
   return (
@@ -44,6 +48,7 @@ export const Body: FC<Body> = ({ statusType }) => {
       <Listbox variant='faded' aria-label={`${statusType} items list`} items={data} disabledKeys={disabledKeys}>
         {(item) => (
           <ListboxItem
+            textValue={item.title}
             className='group/item'
             key={item.id}
             startContent={<DropdownTypes onSelect={onSelectType} item={item} />}
