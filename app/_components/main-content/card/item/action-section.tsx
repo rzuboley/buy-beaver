@@ -5,44 +5,35 @@ import { ItemColorByStatus, ItemStatus, type ItemStatusType } from "@constant"
 import { CirclePause } from "@icons/circle-pause"
 import { CirclePlay } from "@icons/circle-play"
 import { CircleStop } from "@icons/circle-stop"
+import { PenToSquare } from "@icons/pen-to-square"
 
 interface ActionSection {
   onDelete: () => void
+  onEdit: () => void
   onChangeStatus: () => void
   status: ItemStatusType
 }
 
-export const ActionSection: FC<ActionSection> = ({ onDelete, onChangeStatus, status }) => {
+export const ActionSection: FC<ActionSection> = ({ onDelete, onChangeStatus, onEdit, status }) => {
   return (
     <div className='flex gap-1'>
       {onChangeStatus && <ActionButton className={getColor(status)} onClick={onChangeStatus} icon={getIcon(status)} />}
+      {onEdit && <ActionButton className='text-blue-500' onClick={onEdit} icon={PenToSquare} />}
       {onDelete && <ActionButton className='text-red-400' onClick={onDelete} icon={Trash} />}
     </div>
   )
 }
 
-const getColor = (status: ItemStatusType) => {
-  switch (true) {
-    case status === ItemStatus.Costs:
-      return ItemColorByStatus.pending.text
-    case status === ItemStatus.Pending:
-      return ItemColorByStatus.done.text
-    case status === ItemStatus.Done:
-      return ItemColorByStatus.costs.text
-    default:
-      return ItemColorByStatus.costs.text
-  }
-}
+const getColor = (status: ItemStatusType) =>
+  ({
+    [ItemStatus.Costs]: ItemColorByStatus.pending.text,
+    [ItemStatus.Pending]: ItemColorByStatus.done.text,
+    [ItemStatus.Done]: ItemColorByStatus.costs.text
+  })[status]
 
-const getIcon = (status: ItemStatusType) => {
-  switch (true) {
-    case status === ItemStatus.Costs:
-      return CirclePause
-    case status === ItemStatus.Pending:
-      return CircleStop
-    case status === ItemStatus.Done:
-      return CirclePlay
-    default:
-      return CirclePlay
-  }
-}
+const getIcon = (status: ItemStatusType) =>
+  ({
+    [ItemStatus.Costs]: CirclePause,
+    [ItemStatus.Pending]: CircleStop,
+    [ItemStatus.Done]: CirclePlay
+  })[status]

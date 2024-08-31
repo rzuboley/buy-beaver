@@ -25,6 +25,9 @@
       "@utils/*": ["./app/_utils/*"],
       "@services/*": ["./app/_services/*"],
       "@models/*": ["./app/server/_models/*"],
+      "@modals/*": ["./app/_components/modals/*"],
+      "@contexts/*": ["./app/_contexts/*"],
+      "@providers/*": ["./app/_providers/*"],
       "@interface": ["./app/_helpers/interface.ts"],
     }
   },

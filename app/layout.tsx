@@ -1,7 +1,8 @@
 import type { Metadata } from "next"
 import { Roboto } from "next/font/google"
 import { NextUIProvider, cn } from "@nextui-org/react"
-import { ReactQueryProvider } from "@/_providers/react-query"
+import { ReactQueryProvider } from "@providers/react-query"
+import { ModalProvider } from "@providers/modal"
 
 import "./globals.css"
 
@@ -28,7 +29,9 @@ export default function RootLayout({
     <html lang='en'>
       <body className={cn([roboto.className, "bg-stone-700"])}>
         <NextUIProvider>
-          <ReactQueryProvider>{children}</ReactQueryProvider>
+          <ReactQueryProvider>
+            <ModalProvider>{children}</ModalProvider>
+          </ReactQueryProvider>
         </NextUIProvider>
       </body>
     </html>

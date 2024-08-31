@@ -1,8 +1,7 @@
 "use client"
 
 import type { FC } from "react"
-import { Input } from "@nextui-org/input"
-import { Button, CardFooter } from "@nextui-org/react"
+import { Button, CardFooter, Input } from "@nextui-org/react"
 import { Plus } from "@icons/plus"
 import { useForm, type SubmitHandler } from "react-hook-form"
 import { type ItemData, ItemStatus, ItemType } from "@constant"

@@ -2,12 +2,13 @@
 
 import { useGetItems } from "@services/getItems"
 import { type ItemData, ItemStatus, type ItemStatusType } from "@constant"
-import { CardBody, Listbox, ListboxItem, Skeleton } from "@nextui-org/react"
+import { CardBody, Listbox, ListboxItem, Skeleton, useDisclosure } from "@nextui-org/react"
 import { useCallback, useState, type FC } from "react"
 import { DropdownTypes } from "@/_components/main-content/card/item/dropdown-types"
 import { ActionSection } from "@/_components/main-content/card/item/action-section"
 import { useDeleteItem } from "@services/deleteItem"
 import { useUpdateItem } from "@services/updateItem"
+import { useModalContext, MODAL } from "@contexts/modal"
 
 type DeleteData = Pick<ItemData, "id" | "status">
 type ChangeStatusData = DeleteData & { oldStatus: ItemStatusType }
@@ -22,6 +23,7 @@ export const Body: FC<Body> = ({ statusType }) => {
   const { data, isPending } = useGetItems(statusType)
   const { mutate: deleteItem } = useDeleteItem()
   const { mutate: updateItem } = useUpdateItem()
+  const { showModal } = useModalContext()
 
   const onSelectType = useCallback((data: ChangeTypeData) => updateItem(data), [updateItem])
 
@@ -56,6 +58,7 @@ export const Body: FC<Body> = ({ statusType }) => {
               <ActionSection
                 status={item.status}
                 onDelete={() => onDelete(item)}
+                onEdit={() => showModal(MODAL.EDIT_ITEM, { item })}
                 onChangeStatus={() =>
                   onChangeStatus({ id: item.id, status: newStatus(item.status), oldStatus: item.status })
                 }
@@ -73,15 +76,9 @@ export const Body: FC<Body> = ({ statusType }) => {
   )
 }
 
-const newStatus = (statusType: ItemStatusType) => {
-  switch (true) {
-    case statusType === ItemStatus.Costs:
-      return ItemStatus.Pending
-    case statusType === ItemStatus.Pending:
-      return ItemStatus.Done
-    case statusType === ItemStatus.Done:
-      return ItemStatus.Costs
-    default:
-      return ItemStatus.Costs
-  }
-}
+const newStatus = (status: ItemStatusType) =>
+  ({
+    [ItemStatus.Costs]: ItemStatus.Pending,
+    [ItemStatus.Pending]: ItemStatus.Done,
+    [ItemStatus.Done]: ItemStatus.Costs
+  })[status]
