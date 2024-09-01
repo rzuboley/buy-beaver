@@ -26,9 +26,7 @@ export const Body: FC<Body> = ({ statusType }) => {
   const { showModal } = useModalContext()
 
   const onSelectType = useCallback((data: ChangeTypeData) => updateItem(data), [updateItem])
-
   const onChangeStatus = useCallback((data: ChangeStatusData) => updateItem(data), [updateItem])
-
   const onDelete = useCallback(
     ({ id, status }: DeleteData) => {
       setDisabledKeys((state) => [...state, id])
@@ -47,7 +45,12 @@ export const Body: FC<Body> = ({ statusType }) => {
 
   return (
     <CardBody>
-      <Listbox variant='faded' aria-label={`${statusType} items list`} items={data} disabledKeys={disabledKeys}>
+      <Listbox
+        variant='faded'
+        aria-label={`${statusType} items list`}
+        items={Object.values(data || {}).flat()}
+        disabledKeys={disabledKeys}
+      >
         {(item) => (
           <ListboxItem
             textValue={item.title}

@@ -10,7 +10,12 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
   const status = searchParams.get("status") || ItemStatus.Costs
   await connectDB()
-  const data = await ItemModel.find({ status })
+  const data = await ItemModel.aggregate([
+    { $match: { status } },
+    { $project: { _id: 1, title: 1, price: 1, type: 1, status: 1, id: { $toString: "$_id" } } },
+    { $group: { _id: "$type", items: { $push: "$$ROOT" } } }
+  ])
+
   return NextResponse.json({ status: 200, data })
 }
 
@@ -31,7 +36,7 @@ export async function PATCH(request: Request) {
     { $set: data },
     { new: true, upsert: true, runValidators: true }
   )
-  return NextResponse.json({ status: 200, item })
+  return NextResponse.json({ status: 200, item: pick(item, ["_id", "title", "price", "type", "status"]) })
 }
 
 export async function DELETE(request: Request) {

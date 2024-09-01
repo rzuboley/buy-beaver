@@ -1,8 +1,13 @@
 import { cloudRequest } from "@utils/axios"
 import { useQuery, type UseQueryResult } from "@tanstack/react-query"
-import type { ItemData } from "@constant"
+import type { ItemData, ItemType, ItemStatusType } from "@constant"
 
-const getItems = async (status: ItemData["status"]): Promise<ItemData[]> => {
+interface ItemsResponse {
+  _id: ItemType
+  items: ItemData[]
+}
+
+const getItems = async (status: ItemStatusType): Promise<ItemsResponse[]> => {
   try {
     const {
       data: { data = [] } = {}
@@ -14,14 +19,22 @@ const getItems = async (status: ItemData["status"]): Promise<ItemData[]> => {
   }
 }
 
-export const useGetItems = (status: ItemData["status"]): UseQueryResult<ItemData[]> => {
-  const data = useQuery<ItemData[]>({
+export const useGetItems = (status: ItemStatusType): UseQueryResult<Record<ItemType, ItemData[]>> => {
+  const data = useQuery({
     queryKey: ["getItems", status],
     queryFn: () => getItems(status),
     refetchOnWindowFocus: false,
     refetchIntervalInBackground: false,
     refetchInterval: false,
-    refetchOnMount: false
+    refetchOnMount: false,
+    select: (data) =>
+      data.reduce(
+        (acc, el) => {
+          acc[el._id] = el.items
+          return acc
+        },
+        {} as Record<ItemType, ItemData[]>
+      )
   })
 
   return data
