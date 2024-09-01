@@ -21,7 +21,7 @@ export const Footer: FC = () => {
     formState: { isValid, errors }
   } = useForm<Inputs>({
     mode: "onChange",
-    defaultValues: { title: "", price: undefined, type: ItemType.Pending, status: ItemStatus.Costs }
+    defaultValues: { title: "", price: undefined, type: ItemType.Pending, status: ItemStatus.Expenses }
   })
 
   const { mutate, isPending } = useCreateItem()

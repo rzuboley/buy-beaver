@@ -11,7 +11,7 @@ export const Stats = () => {
         </div>
 
         <div className='gap-5'>
-          <Row type={ItemStatus.Costs} />
+          <Row type={ItemStatus.Expenses} />
           <Row type={ItemStatus.Pending} />
           <Row type={ItemStatus.Done} />
         </div>

@@ -26,14 +26,14 @@ export const ActionSection: FC<ActionSection> = ({ onDelete, onChangeStatus, onE
 
 const getColor = (status: ItemStatusType) =>
   ({
-    [ItemStatus.Costs]: ItemColorByStatus.pending.text,
+    [ItemStatus.Expenses]: ItemColorByStatus.pending.text,
     [ItemStatus.Pending]: ItemColorByStatus.done.text,
-    [ItemStatus.Done]: ItemColorByStatus.costs.text
+    [ItemStatus.Done]: ItemColorByStatus.expenses.text
   })[status]
 
 const getIcon = (status: ItemStatusType) =>
   ({
-    [ItemStatus.Costs]: CirclePause,
+    [ItemStatus.Expenses]: CirclePause,
     [ItemStatus.Pending]: CircleStop,
     [ItemStatus.Done]: CirclePlay
   })[status]

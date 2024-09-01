@@ -81,7 +81,7 @@ export const Body: FC<Body> = ({ statusType }) => {
 
 const newStatus = (status: ItemStatusType) =>
   ({
-    [ItemStatus.Costs]: ItemStatus.Pending,
+    [ItemStatus.Expenses]: ItemStatus.Pending,
     [ItemStatus.Pending]: ItemStatus.Done,
-    [ItemStatus.Done]: ItemStatus.Costs
+    [ItemStatus.Done]: ItemStatus.Expenses
   })[status]

@@ -17,6 +17,6 @@ export const useCreateItem = () => {
 
   return useMutation({
     mutationFn: (data: Omit<ItemData, "id">) => createItem(data),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["getItems", ItemStatus.Costs], exact: true })
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["getItems", ItemStatus.Expenses], exact: true })
   })
 }

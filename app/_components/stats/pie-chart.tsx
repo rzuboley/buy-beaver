@@ -23,8 +23,8 @@ export const PieChart: FC<any> = ({ data }) => (
 
 const getColor = ({ id }: { id: DatumId }) => {
   switch (true) {
-    case id === ItemStatus.Costs:
-      return ItemColorByStatus.costs.color
+    case id === ItemStatus.Expenses:
+      return ItemColorByStatus.expenses.color
     case id === ItemStatus.Done:
       return ItemColorByStatus.done.color
     case id === ItemStatus.Pending:

@@ -20,7 +20,7 @@ const Item = new Schema(
     },
     status: {
       type: String,
-      default: ItemStatus.Costs
+      default: ItemStatus.Expenses
     }
   },
   {

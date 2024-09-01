@@ -8,7 +8,7 @@ import pick from "lodash/pick"
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
-  const status = searchParams.get("status") || ItemStatus.Costs
+  const status = searchParams.get("status") || ItemStatus.Expenses
   await connectDB()
   const data = await ItemModel.aggregate([
     { $match: { status } },
