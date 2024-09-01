@@ -2,24 +2,24 @@
 
 import { useGetItems } from "@services/getItems"
 import { type ItemData, ItemStatus, type ItemStatusType } from "@constant"
-import { CardBody, Listbox, ListboxItem, Skeleton } from "@nextui-org/react"
-import { useCallback, useState, type FC } from "react"
+import { CardBody, ListboxItem, Skeleton } from "@nextui-org/react"
+import { useCallback, type FC } from "react"
 import { DropdownTypes } from "@/_components/main-content/card/item/dropdown-types"
 import { ActionSection } from "@/_components/main-content/card/item/action-section"
 import { useDeleteItem } from "@services/deleteItem"
 import { useUpdateItem } from "@services/updateItem"
 import { useModalContext, MODAL } from "@contexts/modal"
+import { ListBox } from "@/_components/main-content/card/body/list-box"
 
 type DeleteData = Pick<ItemData, "id" | "status">
 type ChangeStatusData = DeleteData & { oldStatus: ItemStatusType }
 type ChangeTypeData = DeleteData & Pick<ItemData, "type">
 
-interface Body {
+interface Props {
   statusType: ItemStatusType
 }
 
-export const Body: FC<Body> = ({ statusType }) => {
-  const [disabledKeys, setDisabledKeys] = useState<string[]>([])
+export const Body: FC<Props> = ({ statusType }) => {
   const { data, isPending } = useGetItems(statusType)
   const { mutate: deleteItem } = useDeleteItem()
   const { mutate: updateItem } = useUpdateItem()
@@ -29,8 +29,7 @@ export const Body: FC<Body> = ({ statusType }) => {
   const onChangeStatus = useCallback((data: ChangeStatusData) => updateItem(data), [updateItem])
   const onDelete = useCallback(
     ({ id, status }: DeleteData) => {
-      setDisabledKeys((state) => [...state, id])
-      deleteItem({ id, status }, { onSuccess: () => setDisabledKeys((state) => state.filter((key) => key !== id)) })
+      deleteItem({ id, status })
     },
     [deleteItem]
   )
@@ -45,12 +44,7 @@ export const Body: FC<Body> = ({ statusType }) => {
 
   return (
     <CardBody>
-      <Listbox
-        variant='faded'
-        aria-label={`${statusType} items list`}
-        items={Object.values(data || {}).flat()}
-        disabledKeys={disabledKeys}
-      >
+      <ListBox statusType={statusType} items={data}>
         {(item) => (
           <ListboxItem
             textValue={item.title}
@@ -74,7 +68,7 @@ export const Body: FC<Body> = ({ statusType }) => {
             </span>
           </ListboxItem>
         )}
-      </Listbox>
+      </ListBox>
     </CardBody>
   )
 }

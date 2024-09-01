@@ -40,7 +40,8 @@
         "noUselessRename": "warn",
         "noUselessTernary": "warn",
         "noVoid": "warn",
-        "useLiteralKeys": "warn"
+        "useLiteralKeys": "warn",
+        "noForEach": "off"
       },
       "correctness": {
         "noInvalidNewBuiltin": "warn",
