@@ -1,30 +1,38 @@
-import type { FC } from "react"
+import { useCallback, type FC } from "react"
 import { useModalContext } from "@contexts/modal"
 import { Modal, ModalContent, ModalBody, ModalFooter, ModalHeader, Button, Input } from "@nextui-org/react"
 import { Close } from "@icons/close"
 import { FloppyDisk } from "@icons/floppy-disk"
 import { useForm, type SubmitHandler } from "react-hook-form"
 import { ItemData } from "@helpers/constant"
+import pick from "lodash/pick"
+import { useUpdateItem } from "@services/updateItem"
 
-type Inputs = Pick<ItemData, "title" | "price">
+type Inputs = Pick<ItemData, "title" | "price" | "id" | "status">
 
 export const EditItemModal: FC = () => {
-  const { hideModal, store: { modalProps } } = useModalContext()
+  const {
+    hideModal,
+    store: {
+      modalProps: { item }
+    }
+  } = useModalContext()
+  const { mutate: updateItem, isPending } = useUpdateItem()
 
   const {
     register,
     handleSubmit,
     resetField,
-    reset,
     formState: { isValid, errors }
   } = useForm<Inputs>({
     mode: "onChange",
-    defaultValues: modalProps
+    defaultValues: pick(item, ["title", "price", "id", "status"])
   })
 
-  // const onSubmit: SubmitHandler<Inputs> = (data) => mutate(data, { onSuccess: () => reset() })
-  const isPending = false
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log("===", data)
+  const onSubmit: SubmitHandler<Inputs> = useCallback(
+    (data) => updateItem(data, { onSuccess: hideModal }),
+    [updateItem]
+  )
 
   return (
     <Modal isOpen backdrop='blur' radius='sm' closeButton={<></>}>
@@ -61,26 +69,21 @@ export const EditItemModal: FC = () => {
             </ModalBody>
 
             <ModalFooter className='flex gap-3'>
-              <Button
-                size='sm'
-                radius='sm'
-                className="bg-gray-200 text-gray-400"
-                isIconOnly
-                onPress={hideModal}
-              >
-                <Close width="1.2rem" height="1.2rem" />
+              <Button size='sm' radius='sm' className='bg-gray-200 text-gray-400' isIconOnly onPress={hideModal}>
+                <Close width='1.2rem' height='1.2rem' />
               </Button>
 
               <Button
+                isLoading={isPending}
                 type='submit'
                 disabled={isPending || !isValid}
                 size='sm'
                 radius='sm'
                 color={isValid ? "success" : "primary"}
-                className="text-white"
+                className='text-white'
                 isIconOnly
               >
-                <FloppyDisk width="1.2rem" height="1.2rem" />
+                <FloppyDisk width='1.2rem' height='1.2rem' />
               </Button>
             </ModalFooter>
           </form>
