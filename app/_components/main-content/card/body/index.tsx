@@ -2,7 +2,7 @@
 
 import { useGetItems } from "@services/getItems"
 import { type ItemData, ItemStatus, type ItemStatusType } from "@constant"
-import { CardBody, Listbox, ListboxItem, Skeleton, useDisclosure } from "@nextui-org/react"
+import { CardBody, Listbox, ListboxItem, Skeleton } from "@nextui-org/react"
 import { useCallback, useState, type FC } from "react"
 import { DropdownTypes } from "@/_components/main-content/card/item/dropdown-types"
 import { ActionSection } from "@/_components/main-content/card/item/action-section"

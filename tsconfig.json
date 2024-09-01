@@ -2,6 +2,7 @@
   "compilerOptions": {
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
+    "experimentalDecorators": true,
     "skipLibCheck": true,
     "strict": true,
     "noEmit": true,
@@ -28,6 +29,8 @@
       "@modals/*": ["./app/_components/modals/*"],
       "@contexts/*": ["./app/_contexts/*"],
       "@providers/*": ["./app/_providers/*"],
+      "@stores": ["./app/_stores/index.ts"],
+      "@decorators": ["./app/_decorators/index.ts"],
       "@interface": ["./app/_helpers/interface.ts"],
     }
   },
