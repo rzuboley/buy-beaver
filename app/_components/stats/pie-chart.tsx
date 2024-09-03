@@ -1,9 +1,10 @@
 "use client"
 
-import { type DatumId, ResponsivePie } from "@nivo/pie"
-import { colors } from "@helpers/colors"
+import get from "lodash/get"
 import type { FC } from "react"
-import { ItemColorByStatus, ItemStatus } from "@helpers/constant"
+import { ItemColorByStatus, ItemColorByType } from "@helpers/constant"
+import { colors } from "@helpers/colors"
+import { type DatumId, ResponsivePie } from "@nivo/pie"
 
 export const PieChart: FC<any> = ({ data }) => (
   <ResponsivePie
@@ -21,20 +22,10 @@ export const PieChart: FC<any> = ({ data }) => (
   />
 )
 
-const getColor = ({ id }: { id: DatumId }) => {
-  switch (true) {
-    case id === ItemStatus.Expenses:
-      return ItemColorByStatus.expenses.color
-    case id === ItemStatus.Done:
-      return ItemColorByStatus.done.color
-    case id === ItemStatus.Pending:
-      return ItemColorByStatus.pending.color
-    default:
-      return colors.gray[200]
-  }
-}
+const getColor = ({ id }: { id: DatumId }) =>
+  get(ItemColorByStatus, `${id}.color`) || get(ItemColorByType, `${id}.color`) || colors.gray[200]
 
-export const PieTooltip: FC<{
+const PieTooltip: FC<{
   datum: any
 }> = ({ datum }) => {
   return (

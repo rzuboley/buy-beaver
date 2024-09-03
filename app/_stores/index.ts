@@ -1,4 +1,7 @@
 export { DoneFilterStore } from "./done-filter"
+export { DoneTotalsStore } from "./done-total"
 export { ExpenseFilterStore } from "./expense-filter"
+export { ExpenseTotalsStore } from "./expense-total"
 export { PendingFilterStore } from "./pending-filter"
+export { PendingTotalsStore } from "./pending-total"
 export { PeriodDateStore, type PeriodData } from "./period-date"

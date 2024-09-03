@@ -3,30 +3,38 @@ import { cn } from "@nextui-org/react"
 
 const classes = "p-1 rounded-full"
 
+export const ITEM_TYPE_LABEL = {
+  [ItemType.Food]: "Food",
+  [ItemType.HomeOther]: "Home Other",
+  [ItemType.Fees]: "Fees",
+  [ItemType.Pending]: "May to buy",
+  [ItemType.Archive]: "Archive"
+} as const
+
 export const ITEM_TYPE_OPTIONS = [
   {
     key: ItemType.Food,
-    label: "Food",
+    label: ITEM_TYPE_LABEL[ItemType.Food],
     startContent: <i className={cn([classes, ItemColorByType[ItemType.Food].bg])} />
   },
   {
     key: ItemType.HomeOther,
-    label: "Home Other",
+    label: ITEM_TYPE_LABEL[ItemType.HomeOther],
     startContent: <i className={cn([classes, ItemColorByType[ItemType.HomeOther].bg])} />
   },
   {
     key: ItemType.Fees,
-    label: "Fees",
+    label: ITEM_TYPE_LABEL[ItemType.Fees],
     startContent: <i className={cn([classes, ItemColorByType[ItemType.Fees].bg])} />
   },
   {
     key: ItemType.Pending,
-    label: "May to buy",
+    label: ITEM_TYPE_LABEL[ItemType.Pending],
     startContent: <i className={cn([classes, ItemColorByType[ItemType.Pending].bg])} />
   },
   {
     key: ItemType.Archive,
-    label: "Archive",
+    label: ITEM_TYPE_LABEL[ItemType.Archive],
     startContent: <i className={cn([classes, ItemColorByType[ItemType.Archive].bg])} />
   }
-]
+] as const

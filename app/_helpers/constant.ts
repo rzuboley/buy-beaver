@@ -13,12 +13,12 @@ export const ItemType = {
 export type ItemType = (typeof ItemType)[keyof typeof ItemType]
 
 // ItemColorByType
-export const ItemColorByType: Record<ItemType, { bg: string; text: string }> = {
-  [ItemType.Food]: { bg: "bg-green-500", text: "text-green-500" },
-  [ItemType.HomeOther]: { bg: "bg-yellow-500", text: "text-yellow-500" },
-  [ItemType.Fees]: { bg: "bg-red-500", text: "text-red-500" },
-  [ItemType.Pending]: { bg: "bg-sky-500", text: "text-sky-500" },
-  [ItemType.Archive]: { bg: "bg-gray-400", text: "text-gray-400" }
+export const ItemColorByType: Record<ItemType, { bg: string; text: string; color: string }> = {
+  [ItemType.HomeOther]: { bg: "bg-yellow-500", text: "text-yellow-500", color: colors.yellow[500] },
+  [ItemType.Pending]: { bg: "bg-sky-500", text: "text-sky-500", color: colors.sky[500] },
+  [ItemType.Food]: { bg: "bg-green-500", text: "text-green-500", color: colors.green[500] },
+  [ItemType.Fees]: { bg: "bg-red-500", text: "text-red-500", color: colors.red[500] },
+  [ItemType.Archive]: { bg: "bg-gray-400", text: "text-gray-400", color: colors.gray[400] }
 } as const
 
 // ItemStatus
@@ -35,25 +35,6 @@ export const ItemColorByStatus: Record<ItemStatusType, { bg: string; text: strin
 } as const
 
 export type ItemStatusType = (typeof ItemStatus)[keyof typeof ItemStatus]
-
-// Other
-export const PIE_DATA = [
-  {
-    id: ItemStatus.Done,
-    label: ItemStatus.Done.toUpperCase(),
-    value: 40
-  },
-  {
-    id: ItemStatus.Pending,
-    label: ItemStatus.Pending.toUpperCase(),
-    value: 40
-  },
-  {
-    id: ItemStatus.Expenses,
-    label: ItemStatus.Expenses.toUpperCase(),
-    value: 20
-  }
-]
 
 // Model
 export interface ItemData {
@@ -85,3 +66,6 @@ export const MONTH = [
 ] as const
 
 export const YEAR = ["2024"] as const
+
+// Totals
+export type TotalData = Record<ItemType, number>
