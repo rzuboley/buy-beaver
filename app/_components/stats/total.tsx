@@ -12,7 +12,7 @@ import values from "lodash/values"
 export const Total: FC = observer(() => {
   const total = {
     [ItemStatus.Expenses]: ExpenseTotalsStore.totalAmount,
-    [ItemStatus.Pending]: PendingTotalsStore.totalAmount,
+    [ItemStatus.Process]: PendingTotalsStore.totalAmount,
     [ItemStatus.Done]: DoneTotalsStore.totalAmount
   }
 
@@ -31,7 +31,7 @@ export const Total: FC = observer(() => {
 
         <div className='gap-5'>
           <RowStatus type={ItemStatus.Expenses} value={total[ItemStatus.Expenses]} label={ItemStatus.Expenses} />
-          <RowStatus type={ItemStatus.Pending} value={total[ItemStatus.Pending]} label={ItemStatus.Pending} />
+          <RowStatus type={ItemStatus.Process} value={total[ItemStatus.Process]} label={ItemStatus.Process} />
           <RowStatus type={ItemStatus.Done} value={total[ItemStatus.Done]} label={ItemStatus.Done} />
         </div>
       </CardBody>

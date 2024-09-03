@@ -4,8 +4,8 @@ import sumBy from "lodash/sumBy"
 
 export const newStatus = (status: ItemStatusType) =>
   ({
-    [ItemStatus.Expenses]: ItemStatus.Pending,
-    [ItemStatus.Pending]: ItemStatus.Done,
+    [ItemStatus.Expenses]: ItemStatus.Process,
+    [ItemStatus.Process]: ItemStatus.Done,
     [ItemStatus.Done]: ItemStatus.Expenses
   })[status]
 

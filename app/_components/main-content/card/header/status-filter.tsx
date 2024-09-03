@@ -50,7 +50,7 @@ export const StatusFilter: FC<{ statusType: ItemStatusType }> = ({ statusType })
       return <DoneFilter />
     case ItemStatus.Expenses:
       return <ExpenseFilter />
-    case ItemStatus.Pending:
+    case ItemStatus.Process:
       return <PendingFilter />
     default:
       throw "Invalid item status filter"

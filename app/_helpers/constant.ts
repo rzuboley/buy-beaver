@@ -24,13 +24,13 @@ export const ItemColorByType: Record<ItemType, { bg: string; text: string; color
 // ItemStatus
 export const ItemStatus = {
   Done: "done",
-  Pending: "pending",
+  Process: "process",
   Expenses: "expenses"
 } as const
 
 export const ItemColorByStatus: Record<ItemStatusType, { bg: string; text: string; color: string }> = {
   [ItemStatus.Done]: { bg: "bg-red-300", text: "text-red-300", color: colors.red[300] },
-  [ItemStatus.Pending]: { bg: "bg-yellow-400", text: "text-yellow-400", color: colors.yellow[400] },
+  [ItemStatus.Process]: { bg: "bg-yellow-400", text: "text-yellow-400", color: colors.yellow[400] },
   [ItemStatus.Expenses]: { bg: "bg-sky-400", text: "text-sky-400", color: colors.sky[400] }
 } as const
 

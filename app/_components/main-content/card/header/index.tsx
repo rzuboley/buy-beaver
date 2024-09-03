@@ -11,6 +11,7 @@ export const Header: FC<Wrapper> = ({ children, statusType }) => {
   return (
     <CardHeader className='gap-2 border-b'>
       <Divider orientation='vertical' className={cn("w-1.5 h-6 rounded-md", ItemColorByStatus[statusType].bg)} />
+      <span className='capitalize'>{statusType}</span>
       {children}
       <span className='grow' />
       <StatusFilter statusType={statusType} />

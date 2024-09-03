@@ -20,7 +20,7 @@ export const ListBox: FC<Props> = (props) => {
   switch (props.statusType) {
     case ItemStatus.Expenses:
       return <Box {...props} store={ExpenseFilterStore} setTotals={ExpenseTotalsStore.setTotals} />
-    case ItemStatus.Pending:
+    case ItemStatus.Process:
       return <Box {...props} store={PendingFilterStore} setTotals={PendingTotalsStore.setTotals} />
     case ItemStatus.Done:
       return <Box {...props} store={DoneFilterStore} setTotals={DoneTotalsStore.setTotals} />
