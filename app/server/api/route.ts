@@ -1,5 +1,6 @@
 "use server"
 
+import dayjs from "dayjs"
 import { NextResponse } from "next/server"
 import ItemModel from "@models/ItemModel"
 import { connectDB } from "@utils/connectDB"
@@ -8,11 +9,16 @@ import pick from "lodash/pick"
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
-  const status = searchParams.get("status") || ItemStatus.Expenses
+  const [status, month, year] = [
+    searchParams.get("status") || ItemStatus.Expenses,
+    searchParams.get("month") || dayjs().format("MM"),
+    searchParams.get("year") || dayjs().format("YYYY")
+  ]
+
   await connectDB()
   const data = await ItemModel.aggregate([
-    { $match: { status } },
-    { $project: { _id: 1, title: 1, price: 1, type: 1, status: 1, id: { $toString: "$_id" } } },
+    { $match: { status, "period.year": year, "period.month": month } },
+    { $project: { _id: 1, title: 1, price: 1, type: 1, status: 1, id: { $toString: "$_id" }, period: 1 } },
     { $group: { _id: "$type", items: { $push: "$$ROOT" } } }
   ])
 
@@ -23,7 +29,7 @@ export async function POST(request: Request) {
   await connectDB()
   const data = await request.json()
   const item = await ItemModel.create(data)
-  return NextResponse.json({ status: 200, item: pick(item, ["_id", "title", "price", "type", "status"]) })
+  return NextResponse.json({ status: 200, item })
 }
 
 export async function PATCH(request: Request) {
@@ -36,7 +42,7 @@ export async function PATCH(request: Request) {
     { $set: data },
     { new: true, upsert: true, runValidators: true }
   )
-  return NextResponse.json({ status: 200, item: pick(item, ["_id", "title", "price", "type", "status"]) })
+  return NextResponse.json({ status: 200, item })
 }
 
 export async function DELETE(request: Request) {

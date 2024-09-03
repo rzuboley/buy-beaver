@@ -1,17 +1,18 @@
 import { cloudRequest } from "@utils/axios"
 import { useQuery, type UseQueryResult } from "@tanstack/react-query"
 import type { ItemData, ItemType, ItemStatusType } from "@constant"
+import type { PeriodData } from "@stores"
 
 interface ItemsResponse {
   _id: ItemType
   items: ItemData[]
 }
 
-const getItems = async (status: ItemStatusType): Promise<ItemsResponse[]> => {
+const getItems = async (status: ItemStatusType, { month, year }: PeriodData): Promise<ItemsResponse[]> => {
   try {
     const {
       data: { data = [] } = {}
-    } = await cloudRequest({ url: "/server/api", params: { status } })
+    } = await cloudRequest({ url: "/server/api", params: { month, year, status } })
     return data
   } catch (error) {
     console.error("Axios error:", error)
@@ -19,10 +20,13 @@ const getItems = async (status: ItemStatusType): Promise<ItemsResponse[]> => {
   }
 }
 
-export const useGetItems = (status: ItemStatusType): UseQueryResult<Record<ItemType, ItemData[]>> => {
+export const useGetItems = (
+  status: ItemStatusType,
+  { month, year }: PeriodData
+): UseQueryResult<Record<ItemType, ItemData[]>> => {
   const data = useQuery({
-    queryKey: ["getItems", status],
-    queryFn: () => getItems(status),
+    queryKey: ["getItems", status, month, year],
+    queryFn: () => getItems(status, { month, year }),
     refetchOnWindowFocus: false,
     refetchIntervalInBackground: false,
     refetchInterval: false,

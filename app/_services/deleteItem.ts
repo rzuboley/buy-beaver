@@ -17,6 +17,6 @@ export const useDeleteItem = () => {
   return useMutation({
     mutationFn: (data: Pick<ItemData, "id" | "status">) => deleteItem(data),
     onSuccess: (__, variables) =>
-      queryClient.invalidateQueries({ queryKey: ["getItems", variables.status], exact: true })
+      queryClient.invalidateQueries({ queryKey: ["getItems", variables.status], exact: false })
   })
 }

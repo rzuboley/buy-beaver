@@ -54,12 +54,12 @@
         "noArguments": "warn",
         "noNegationElse": "warn",
         "noVar": "warn",
-        "useBlockStatements": "warn",
         "useConst": "warn",
         "useDefaultParameterLast": "warn",
         "useExponentiationOperator": "warn",
         "useSingleVarDeclarator": "warn",
-        "useTemplate": "warn"
+        "useTemplate": "warn",
+        "useBlockStatements": "off"
       },
       "suspicious": {
         "noDoubleEquals": "error",

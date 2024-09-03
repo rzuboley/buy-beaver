@@ -1,3 +1,4 @@
+import type { PeriodData } from "@stores"
 import { colors } from "./colors"
 
 // ItemType
@@ -61,7 +62,26 @@ export interface ItemData {
   price: number
   type: ItemType
   status: ItemStatusType
+  period: PeriodData
 }
 
 export type UpdateItemData = Required<Pick<ItemData, "id">> &
   Partial<Omit<ItemData & { oldStatus: ItemStatusType }, "id">>
+
+// Dates
+export const MONTH = [
+  ["01", "January"],
+  ["02", "February"],
+  ["03", "March"],
+  ["04", "April"],
+  ["05", "May"],
+  ["06", "June"],
+  ["07", "July"],
+  ["08", "August"],
+  ["09", "September"],
+  ["10", "October"],
+  ["11", "November"],
+  ["12", "December"]
+] as const
+
+export const YEAR = ["2024"] as const

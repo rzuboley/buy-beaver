@@ -1,38 +1,28 @@
 "use client"
 
-import { useGetItems } from "@services/getItems"
-import { type ItemData, ItemStatus, type ItemStatusType } from "@constant"
-import { CardBody, ListboxItem, Skeleton } from "@nextui-org/react"
-import { useCallback, type FC } from "react"
-import { DropdownTypes } from "@/_components/main-content/card/item/dropdown-types"
+import type { ItemData, ItemStatusType } from "@constant"
 import { ActionSection } from "@/_components/main-content/card/item/action-section"
-import { useDeleteItem } from "@services/deleteItem"
-import { useUpdateItem } from "@services/updateItem"
-import { useModalContext, MODAL } from "@contexts/modal"
+import { CardBody, ListboxItem, Skeleton } from "@nextui-org/react"
+import { DropdownTypes } from "@/_components/main-content/card/item/dropdown-types"
 import { ListBox } from "@/_components/main-content/card/body/list-box"
+import { PeriodDateStore } from "@stores"
+import { newStatus } from "@helpers/status"
+import { observer } from "mobx-react-lite"
+import { useCallback, type FC } from "react"
+import { useDeleteItem } from "@services/deleteItem"
+import { useGetItems } from "@services/getItems"
+import { useModalContext, MODAL } from "@contexts/modal"
+import { useUpdateItem } from "@services/updateItem"
 
-type DeleteData = Pick<ItemData, "id" | "status">
-type ChangeStatusData = DeleteData & { oldStatus: ItemStatusType }
-type ChangeTypeData = DeleteData & Pick<ItemData, "type">
-
-interface Props {
-  statusType: ItemStatusType
-}
-
-export const Body: FC<Props> = ({ statusType }) => {
-  const { data, isPending } = useGetItems(statusType)
+export const Body: FC<Props> = observer(({ statusType }) => {
+  const { data, isPending } = useGetItems(statusType, PeriodDateStore.periodDate)
   const { mutate: deleteItem } = useDeleteItem()
   const { mutate: updateItem } = useUpdateItem()
   const { showModal } = useModalContext()
 
   const onSelectType = useCallback((data: ChangeTypeData) => updateItem(data), [updateItem])
   const onChangeStatus = useCallback((data: ChangeStatusData) => updateItem(data), [updateItem])
-  const onDelete = useCallback(
-    ({ id, status }: DeleteData) => {
-      deleteItem({ id, status })
-    },
-    [deleteItem]
-  )
+  const onDelete = useCallback((data: DeleteData) => deleteItem(data), [deleteItem])
 
   if (isPending) {
     return (
@@ -71,11 +61,12 @@ export const Body: FC<Props> = ({ statusType }) => {
       </ListBox>
     </CardBody>
   )
-}
+})
 
-const newStatus = (status: ItemStatusType) =>
-  ({
-    [ItemStatus.Expenses]: ItemStatus.Pending,
-    [ItemStatus.Pending]: ItemStatus.Done,
-    [ItemStatus.Done]: ItemStatus.Expenses
-  })[status]
+type DeleteData = Pick<ItemData, "id" | "status">
+type ChangeStatusData = Pick<ItemData, "id" | "status"> & { oldStatus: ItemStatusType }
+type ChangeTypeData = Pick<ItemData, "id" | "status" | "type">
+
+interface Props {
+  statusType: ItemStatusType
+}

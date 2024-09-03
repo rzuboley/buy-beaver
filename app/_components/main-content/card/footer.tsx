@@ -7,6 +7,7 @@ import { useForm, type SubmitHandler } from "react-hook-form"
 import { type ItemData, ItemStatus, ItemType } from "@constant"
 import { DropdownTypes } from "@/_components/main-content/card/item/dropdown-types"
 import { useCreateItem } from "@services/createItem"
+import { PeriodDateStore } from "@stores"
 
 type Inputs = Omit<ItemData, "id">
 
@@ -21,12 +22,15 @@ export const Footer: FC = () => {
     formState: { isValid, errors }
   } = useForm<Inputs>({
     mode: "onChange",
-    defaultValues: { title: "", price: undefined, type: ItemType.Pending, status: ItemStatus.Expenses }
+    defaultValues: { title: "", price: undefined, status: ItemStatus.Expenses, type: ItemType.Pending }
   })
 
   const { mutate, isPending } = useCreateItem()
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => mutate(data, { onSuccess: () => reset() })
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    const { year, month, day } = PeriodDateStore.periodDate
+    mutate({ ...data, period: { year, month, day } }, { onSuccess: () => reset() })
+  }
 
   const onSelect = ({ type }: ItemData) => setValue("type", type)
 
