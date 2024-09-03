@@ -5,11 +5,11 @@ import type { FC } from "react"
 import values from "lodash/values"
 import {
   ExpenseFilterStore,
-  PendingFilterStore,
+  ProcessFilterStore,
   DoneFilterStore,
   ExpenseTotalsStore,
   DoneTotalsStore,
-  PendingTotalsStore
+  ProcessTotalsStore
 } from "@stores"
 import { Listbox, type ListboxProps } from "@nextui-org/react"
 import { observer } from "mobx-react-lite"
@@ -21,7 +21,7 @@ export const ListBox: FC<Props> = (props) => {
     case ItemStatus.Expenses:
       return <Box {...props} store={ExpenseFilterStore} setTotals={ExpenseTotalsStore.setTotals} />
     case ItemStatus.Process:
-      return <Box {...props} store={PendingFilterStore} setTotals={PendingTotalsStore.setTotals} />
+      return <Box {...props} store={ProcessFilterStore} setTotals={ProcessTotalsStore.setTotals} />
     case ItemStatus.Done:
       return <Box {...props} store={DoneFilterStore} setTotals={DoneTotalsStore.setTotals} />
     default:
@@ -53,7 +53,7 @@ interface Props extends Omit<ListboxProps, "children" | "items"> {
 }
 
 interface Store {
-  store: typeof DoneFilterStore | typeof PendingFilterStore | typeof ExpenseFilterStore
+  store: typeof DoneFilterStore | typeof ProcessFilterStore | typeof ExpenseFilterStore
 }
 
 interface SetTotals {

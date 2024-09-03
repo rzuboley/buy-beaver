@@ -27,4 +27,4 @@ class Store {
   }
 }
 
-export const PendingFilterStore = Store.getInstance()
+export const ProcessFilterStore = Store.getInstance()

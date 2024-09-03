@@ -39,4 +39,4 @@ class Store {
   }
 }
 
-export const PendingTotalsStore = Store.getInstance()
+export const ProcessTotalsStore = Store.getInstance()

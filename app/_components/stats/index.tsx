@@ -1,7 +1,7 @@
 import type { FC } from "react"
 import { DoneSection } from "./done"
 import { ExpensesSection } from "./expenses"
-import { PendingSection } from "./pending"
+import { ProcessSection } from "./process"
 import { Total } from "./total"
 
 export const Stats: FC = () => {
@@ -9,7 +9,7 @@ export const Stats: FC = () => {
     <div className='flex flex-col gap-3'>
       <Total />
       <ExpensesSection />
-      <PendingSection />
+      <ProcessSection />
       <DoneSection />
     </div>
   )

@@ -3,7 +3,7 @@
 import type { FC } from "react"
 import { Select, SelectItem, type SelectProps } from "@nextui-org/react"
 import { ITEM_TYPE_OPTIONS } from "@/_helpers/item-type-options"
-import { ExpenseFilterStore, PendingFilterStore, DoneFilterStore } from "@stores"
+import { ExpenseFilterStore, ProcessFilterStore, DoneFilterStore } from "@stores"
 import { type ItemStatusType, ItemStatus } from "@constant"
 import { observer } from "mobx-react-lite"
 
@@ -29,7 +29,7 @@ const SelectFilter: FC<Omit<SelectProps, "children">> = (props) => {
 }
 
 const onExpenseSelectionChange = (data: any) => ExpenseFilterStore.setFilter(Array.from(data))
-const onPendingSelectionChange = (data: any) => PendingFilterStore.setFilter(Array.from(data))
+const onPendingSelectionChange = (data: any) => ProcessFilterStore.setFilter(Array.from(data))
 const onDoneSelectionChange = (data: any) => DoneFilterStore.setFilter(Array.from(data))
 
 const ExpenseFilter: FC = observer(() => (
@@ -37,7 +37,7 @@ const ExpenseFilter: FC = observer(() => (
 ))
 
 const PendingFilter: FC = observer(() => (
-  <SelectFilter selectedKeys={PendingFilterStore.filter} onSelectionChange={onPendingSelectionChange} />
+  <SelectFilter selectedKeys={ProcessFilterStore.filter} onSelectionChange={onPendingSelectionChange} />
 ))
 
 const DoneFilter: FC = observer(() => (
