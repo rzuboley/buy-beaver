@@ -8,7 +8,7 @@ import { ItemStatus, ItemType } from "@constant"
 import { RowType } from "./row"
 import { observer } from "mobx-react-lite"
 import { PieChart } from "./pie-chart"
-import { ITEM_TYPE_LABEL } from "@helpers/item-type-options"
+import { ITEM_TYPE_LABEL } from "@helpers/select-options"
 
 export const DoneSection: FC = observer(() => {
   const { total } = DoneTotalsStore

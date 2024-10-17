@@ -3,7 +3,7 @@ import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@
 import { ItemColorByType, type ItemData, ItemType } from "@constant"
 
 import { Flag } from "@icons/flag"
-import { ITEM_TYPE_OPTIONS } from "@/_helpers/item-type-options"
+import { ITEM_TYPE_OPTIONS } from "@/_helpers/select-options"
 
 interface DropdownTypes {
   onSelect: (v: any) => void

@@ -2,7 +2,7 @@
 
 import type { FC } from "react"
 import { Select, SelectItem, type SelectProps } from "@nextui-org/react"
-import { ITEM_TYPE_OPTIONS } from "@/_helpers/item-type-options"
+import { ITEM_TYPE_OPTIONS } from "@/_helpers/select-options"
 import { ExpenseFilterStore, ProcessFilterStore, DoneFilterStore } from "@stores"
 import { type ItemStatusType, ItemStatus } from "@constant"
 import { observer } from "mobx-react-lite"

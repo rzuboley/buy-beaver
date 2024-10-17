@@ -1,10 +1,10 @@
 "use client"
 
 import { Select, SelectItem, type SelectProps } from "@nextui-org/react"
-import { MONTH, YEAR } from "@constant"
 import type { FC } from "react"
 import { observer } from "mobx-react-lite"
 import { PeriodDateStore } from "@stores"
+import { MONTH_OPTIONS, YEAR_OPTIONS } from "@helpers/select-options"
 
 const onMonthChange = ([month]: any) => PeriodDateStore.setDate({ month })
 
@@ -14,7 +14,7 @@ export const Title: FC = observer(() => {
       <Select
         {...selectProps}
         aria-label='Select month'
-        items={monthOptions}
+        items={MONTH_OPTIONS}
         defaultSelectedKeys={[PeriodDateStore.periodDate.month]}
         className='w-32'
         onSelectionChange={onMonthChange}
@@ -25,7 +25,7 @@ export const Title: FC = observer(() => {
       <Select
         {...selectProps}
         aria-label='Select year'
-        items={yearOptions}
+        items={YEAR_OPTIONS}
         defaultSelectedKeys={[PeriodDateStore.periodDate.year]}
         className='w-24'
         isDisabled
@@ -35,9 +35,6 @@ export const Title: FC = observer(() => {
     </h1>
   )
 })
-
-const monthOptions = MONTH.map(([key, label]) => ({ key, label }))
-const yearOptions = YEAR.map((m) => ({ key: m, label: m }))
 
 const selectProps = {
   disallowEmptySelection: true,

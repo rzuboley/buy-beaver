@@ -1,12 +1,23 @@
-import { useCallback, type FC } from "react"
-import { useModalContext } from "@contexts/modal"
-import { Modal, ModalContent, ModalBody, ModalFooter, ModalHeader, Button, Input } from "@nextui-org/react"
+import pick from "lodash/pick"
+import type { ItemData } from "@helpers/constant"
 import { Close } from "@icons/close"
 import { FloppyDisk } from "@icons/floppy-disk"
+import {
+  Modal,
+  ModalContent,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+  Button,
+  Input,
+  Select,
+  type SelectProps
+} from "@nextui-org/react"
+import { useCallback, type FC } from "react"
 import { useForm, type SubmitHandler } from "react-hook-form"
-import { ItemData } from "@helpers/constant"
-import pick from "lodash/pick"
+import { useModalContext } from "@contexts/modal"
 import { useUpdateItem } from "@services/updateItem"
+import { MONTH_OPTIONS, YEAR_OPTIONS } from "@helpers/select-options"
 
 type Inputs = Pick<ItemData, "title" | "price" | "id" | "status">
 
@@ -31,11 +42,11 @@ export const EditItemModal: FC = () => {
 
   const onSubmit: SubmitHandler<Inputs> = useCallback(
     (data) => updateItem(data, { onSuccess: hideModal }),
-    [updateItem]
+    [updateItem, hideModal]
   )
 
   return (
-    <Modal isOpen backdrop='blur' radius='sm' closeButton={<></>}>
+    <Modal isOpen backdrop='blur' radius='sm' closeButton={<i className='hidden' />}>
       <ModalContent>
         {() => (
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -66,6 +77,17 @@ export const EditItemModal: FC = () => {
                   setValueAs: (v) => Number(v || 0).toFixed(2)
                 })}
               />
+
+              {/* <Select
+                {...selectProps}
+                aria-label='Select month'
+                items={MONTH_OPTIONS}
+                defaultSelectedKeys={[]}
+                className='w-32'
+                onSelectionChange={onMonthChange}
+              >
+                {({ label, key }) => <SelectItem key={key}>{label}</SelectItem>}
+              </Select> */}
             </ModalBody>
 
             <ModalFooter className='flex gap-3'>
@@ -92,3 +114,10 @@ export const EditItemModal: FC = () => {
     </Modal>
   )
 }
+
+const selectProps = {
+  disallowEmptySelection: true,
+  size: "sm",
+  variant: "bordered",
+  radius: "sm"
+} as SelectProps

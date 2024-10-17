@@ -1,4 +1,4 @@
-import { ItemColorByType, ItemType } from "@constant"
+import { ItemColorByType, ItemType, MONTH, YEAR } from "@constant"
 import { cn } from "@nextui-org/react"
 
 const classes = "p-1 rounded-full"
@@ -38,3 +38,7 @@ export const ITEM_TYPE_OPTIONS = [
     startContent: <i className={cn([classes, ItemColorByType[ItemType.Archive].bg])} />
   }
 ] as const
+
+export const MONTH_OPTIONS = MONTH.map(([key, label]) => ({ key, label }))
+
+export const YEAR_OPTIONS = YEAR.map((m) => ({ key: m, label: m }))
