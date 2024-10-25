@@ -4,6 +4,8 @@ import { NextUIProvider, cn } from "@nextui-org/react"
 import { ReactQueryProvider } from "@providers/react-query"
 import { ModalProvider } from "@providers/modal"
 
+import { ClerkProvider } from "@clerk/nextjs"
+
 import "./globals.css"
 
 const roboto = Roboto({
@@ -30,7 +32,9 @@ export default function RootLayout({
       <body className={cn([roboto.className, "bg-stone-700"])}>
         <NextUIProvider>
           <ReactQueryProvider>
-            <ModalProvider>{children}</ModalProvider>
+            <ClerkProvider>
+              <ModalProvider>{children}</ModalProvider>
+            </ClerkProvider>
           </ReactQueryProvider>
         </NextUIProvider>
       </body>

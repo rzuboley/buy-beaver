@@ -39,6 +39,7 @@ export type ItemStatusType = (typeof ItemStatus)[keyof typeof ItemStatus]
 // Model
 export interface ItemData {
   id: string
+  userId: string
   title: string
   price: number
   type: ItemType

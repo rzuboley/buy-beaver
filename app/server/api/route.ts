@@ -7,8 +7,11 @@ import { connectDB } from "@utils/connectDB"
 import { ItemStatus } from "@constant"
 import pick from "lodash/pick"
 import isArray from "lodash/isArray"
+import { auth } from "@clerk/nextjs/server"
 
 export async function GET(request: Request) {
+  const { userId } = await auth()
+
   const { searchParams } = new URL(request.url)
   const [status, month, year] = [
     searchParams.get("status") || ItemStatus.Expenses,
@@ -18,7 +21,7 @@ export async function GET(request: Request) {
 
   await connectDB()
   const data = await ItemModel.aggregate([
-    { $match: { status, "period.year": year, "period.month": month } },
+    { $match: { userId, status, "period.year": year, "period.month": month } },
     { $project: { _id: 1, title: 1, price: 1, type: 1, status: 1, id: { $toString: "$_id" }, period: 1 } },
     { $group: { _id: "$type", items: { $push: "$$ROOT" } } }
   ])
@@ -27,12 +30,17 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
+  const { userId } = await auth()
+
   await connectDB()
   const data = await request.json()
   try {
     const item = isArray(data)
-      ? await ItemModel.insertMany(data, { ordered: false }) // Ignores errors
-      : await ItemModel.create(data)
+      ? await ItemModel.insertMany(
+          data.map((i) => ({ ...i, userId })),
+          { ordered: false }
+        ) // Ignores errors
+      : await ItemModel.create({ ...data, userId })
     return NextResponse.json({ status: 200, item })
   } catch (err: any) {
     if (err.insertedDocs?.length) {

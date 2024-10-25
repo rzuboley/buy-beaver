@@ -48,7 +48,8 @@ const Item = new Schema(
     period: {
       type: PeriodSchema,
       required: true
-    }
+    },
+    userId: { type: String, required: true }
   },
   {
     minimize: true,

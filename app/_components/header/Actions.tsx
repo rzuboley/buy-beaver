@@ -1,11 +1,11 @@
 import { Divider } from "@nextui-org/divider"
-import { Avatar } from "@nextui-org/avatar"
+import { UserButton } from "@clerk/nextjs"
 
 export const Actions = () => {
   return (
     <>
       <Divider orientation='vertical' className='h-5' />
-      <Avatar isBordered radius='sm' size='sm' isDisabled name='Beaver' />
+      <UserButton />
     </>
   )
 }
