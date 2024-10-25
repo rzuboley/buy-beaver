@@ -1,8 +1,10 @@
 import type { FC, PropsWithChildren } from "react"
 import { CardHeader, Divider, cn } from "@nextui-org/react"
-import { StatusFilter } from "@/_components/main-content/card/header/status-filter"
-import { Title } from "./title"
 import { type ItemStatusType, ItemColorByStatus } from "@constant"
+
+import { StatusFilter } from "./status-filter"
+import { Title } from "./title"
+import { ActionDropdown } from "./action-dropdown"
 
 interface Wrapper extends PropsWithChildren {
   statusType: ItemStatusType
@@ -16,6 +18,7 @@ export const Header: FC<Wrapper> = ({ children, statusType }) => {
       {children}
       <span className='grow' />
       <StatusFilter statusType={statusType} />
+      {statusType === "expenses" && <ActionDropdown />}
     </CardHeader>
   )
 }

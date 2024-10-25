@@ -16,7 +16,7 @@ export const useCreateItem = () => {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: (data: Omit<ItemData, "id">) => createItem(data),
+    mutationFn: (data: Omit<ItemData, "id"> | ItemData[]) => createItem(data),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["getItems", ItemStatus.Expenses], exact: false })
   })
 }

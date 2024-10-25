@@ -69,3 +69,8 @@ export const YEAR = ["2024"] as const
 
 // Totals
 export type TotalData = Record<ItemType, number>
+
+// Dropdowns
+export enum EXPENSES_ACTIONS {
+  DEFAULT_LIST = "add-default-list"
+}

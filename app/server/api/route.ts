@@ -6,6 +6,7 @@ import ItemModel from "@models/ItemModel"
 import { connectDB } from "@utils/connectDB"
 import { ItemStatus } from "@constant"
 import pick from "lodash/pick"
+import isArray from "lodash/isArray"
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
@@ -28,8 +29,17 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   await connectDB()
   const data = await request.json()
-  const item = await ItemModel.create(data)
-  return NextResponse.json({ status: 200, item })
+  try {
+    const item = isArray(data)
+      ? await ItemModel.insertMany(data, { ordered: false }) // Ignores errors
+      : await ItemModel.create(data)
+    return NextResponse.json({ status: 200, item })
+  } catch (err: any) {
+    if (err.insertedDocs?.length) {
+      return NextResponse.json({ status: 200, item: err.insertedDocs })
+    }
+    return NextResponse.json({ status: 500 })
+  }
 }
 
 export async function PATCH(request: Request) {
