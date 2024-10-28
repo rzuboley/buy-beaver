@@ -1,6 +1,6 @@
-import { Logo } from "@/_components/header/logo"
-import { Title } from "@/_components/header/title"
-import { Actions } from "@/_components/header/actions"
+import { Logo } from "./logo"
+import { Title } from "./title"
+import { Actions } from "./actions"
 
 export const Header = () => {
   return (
