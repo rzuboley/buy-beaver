@@ -8,7 +8,7 @@ import { MONTH_OPTIONS, YEAR_OPTIONS } from "@helpers/select-options"
 
 const onMonthChange = ([month]: any) => PeriodDateStore.setDate({ month })
 
-export const Title: FC = observer(() => {
+export const Selects: FC = observer(() => {
   return (
     <h1 className='flex items-center gap-2'>
       <Select
